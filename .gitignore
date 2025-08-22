@@ -1,0 +1,12 @@
+# Node / build files (if any later)
+node_modules/
+dist/
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+*.log
