@@ -66,6 +66,12 @@ const personaData = {
   }
 };
 
+
+
+
+
+
+
 // Home page rendering
 function renderHome() {
   const app = document.getElementById('app');
@@ -79,7 +85,9 @@ function renderHome() {
       `).join('')}
     </div>
   `;
+  
 }
+
 
 // Persona details rendering
 function renderPersona(name) {
@@ -136,5 +144,72 @@ function checkAnswer(persona, qIndex, selected) {
   }
 }
 
-// Initial load
-window.onload = renderHome;
+window.onload = renderHome; 
+
+// Handle navigation clicks
+document.querySelectorAll("nav a").forEach(link => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const target = link.getAttribute("href").substring(1); // remove #
+    navigateTo(target);
+  });
+});
+
+function navigateTo(section) {
+  const app = document.getElementById("app");
+
+  if (section === "home") {
+    renderPersonas();
+  } 
+  else if (section === "learn") {
+    app.innerHTML = `
+      <section id="learn-section">
+        <h2>Learn Cyber Safety</h2>
+        <p>Stay safe online by following these best practices:</p>
+        <ul>
+          <li>Use strong & unique passwords.</li>
+          <li>Enable 2FA whenever possible.</li>
+          <li>Beware of phishing emails & suspicious links.</li>
+          <li>Keep software and apps updated.</li>
+        </ul>
+      </section>
+    `;
+  } 
+  else if (section === "quiz") {
+    app.innerHTML = `
+      <section id="quiz-section">
+        <h2>General Cyber Quiz</h2>
+        <div class="quiz-section">
+          <h3>What should you do if you get a suspicious email?</h3>
+          <button onclick="showFeedback('Correct! Never click unknown links.')">Ignore it / Report it</button>
+          <button onclick="showFeedback('Not safe! Clicking could expose you.')">Click the link</button>
+          <button onclick="showFeedback('Risky! Don’t download unknown files.')">Download the attachment</button>
+          <div id="quiz-feedback" class="feedback"></div>
+        </div>
+      </section>
+    `;
+  } 
+  else if (section === "sos") {
+    app.innerHTML = `
+      <section id="sos-section">
+        <h2>🚨 SOS - Emergency Help</h2>
+        <p>If you are in danger online:</p>
+        <ul>
+          <li>Call the national cybercrime helpline: <strong>1930 (India)</strong></li>
+          <li>Report at <a href="https://cybercrime.gov.in" target="_blank">cybercrime.gov.in</a></li>
+          <li>Disconnect from suspicious accounts immediately.</li>
+          <li>Inform a trusted person.</li>
+        </ul>
+      </section>
+    `;
+  }
+}
+
+// Reuse feedback system
+function showFeedback(message) {
+  const fb = document.getElementById("quiz-feedback");
+  fb.textContent = message;
+}
+
+
+
